@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="20dp"/>
+    <stroke android:color="@color/black" android:width="2dp" />
+</shape>
+<!--<selector xmlns:android="http://schemas.android.com/apk/res/android" >-->
+<!--    <item>-->
+
+<!--        </item>-->
+<!--&lt;!&ndash;    <item android:state_pressed="true" android:drawable="@color/black" />&ndash;&gt;-->
+<!--&lt;!&ndash;    <item android:state_enabled="true" android:drawable="@color/white" />&ndash;&gt;-->
+<!--&lt;!&ndash;    <item android:state_enabled="false" android:drawable="@color/white" />&ndash;&gt;-->
+<!--&lt;!&ndash;    <item android:drawable="@color/white" />&ndash;&gt;-->
+
+<!--</selector>-->
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+
+    <!--&lt;!&ndash;    <?xml version="1.0" encoding="utf-8"?>&ndash;&gt;-->
+    <!--<selector xmlns:android="http://schemas.android.com/apk/res/android">-->
+
+    <!--    <item>-->
+    <!--        <shape xmlns:android="http://schemas.android.com/apk/res/android">-->
+    <!--            <corners android:radius="20dp"/>-->
+    <!--            <stroke android:color="@color/black" android:width="2dp" />-->
+    <!--        </shape>-->
+    <!--    </item>-->
+    <!--<item android:state_pressed="true"-->
+    <!--    android:drawable="@color/black"/> &lt;!&ndash; pressed &ndash;&gt;-->
+    <!--<item android:state_focused="true"-->
+    <!--    android:drawable="@color/white"/> &lt;!&ndash; focused &ndash;&gt;-->
+    <!--<item android:drawable="@color/white"/>-->
+
+    <!--    &lt;!&ndash; default &ndash;&gt;-->
+    <!--&lt;!&ndash;    <corners android:radius="20dp"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;    <stroke android:color="@color/black" android:width="2dp" />&ndash;&gt;-->
+    <!--</selector>-->

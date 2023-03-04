@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ArtistActivity">
+
+    <ImageView
+        android:id="@+id/artistImage"
+        android:layout_width="match_parent"
+        android:layout_height="267dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewArtistTags"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/artistImage" />
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/spinKitViewArtist"
+        style="@style/SpinKitView.CubeGrid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        app:SpinKit_Color="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/infoTextViewArtist"
+        app:layout_constraintEnd_toEndOf="@+id/infoTextViewArtist"
+        app:layout_constraintStart_toStartOf="@+id/infoTextViewArtist"
+        app:layout_constraintTop_toTopOf="@+id/infoTextViewArtist"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/infoTextViewArtist"
+        android:layout_width="352dp"
+        android:layout_height="218dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/nunito_medium"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewArtistTags" />
+
+    <TextView
+        android:id="@+id/playCount"
+        android:layout_width="132dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="180dp"
+        android:fontFamily="@font/nunito_medium"
+        android:gravity="center"
+        android:text="Play Count"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/labelPlayCount"
+        android:layout_width="132dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="220dp"
+        android:fontFamily="@font/nunito_medium"
+        android:gravity="center"
+        android:text="Play Count"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/listeners"
+        android:layout_width="132dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="180dp"
+        android:fontFamily="@font/nunito_medium"
+        android:gravity="center"
+        android:text="Followers"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toEndOf="@+id/playCount"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/labellisteners"
+        android:layout_width="132dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="220dp"
+        android:fontFamily="@font/nunito_medium"
+        android:gravity="center"
+        android:text="Followers"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toEndOf="@+id/playCount"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/topAlbumsTextView"
+        android:layout_width="132dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/nunito_medium"
+        android:gravity="center"
+        android:text="Top Albums"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.057"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infoTextViewArtist"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/topTracksTextView"
+        android:layout_width="132dp"
+        android:layout_height="40dp"
+        android:fontFamily="@font/nunito_medium"
+        android:gravity="center"
+        android:text="Top Tracks"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.057"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/artistTopAlbums"
+        android:visibility="gone"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/artistTopAlbums"
+        android:layout_width="411dp"
+        android:layout_height="252dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topAlbumsTextView"
+        tools:listitem="@layout/image_item" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/artistTopTracks"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topTracksTextView"
+        tools:listitem="@layout/image_item" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
