@@ -5,6 +5,7 @@ import android.content.Intent
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicwiki.AlbumActivity
@@ -14,6 +15,7 @@ import com.example.musicwiki.data.topArtistsData.Artist
 import com.example.musicwiki.data.topArtistsData.TopArtists
 import com.example.musicwiki.databinding.ArtistItemBinding
 import com.example.musicwiki.databinding.ImageItemBinding
+import com.example.musicwiki.util.MyUtils
 
 class TopArtistAdapter(private val list: List<Artist>, private val context: Context): RecyclerView.Adapter<TopArtistAdapter.topArtistsRecyclerViewViewHolder>() {
 
@@ -37,11 +39,17 @@ class TopArtistAdapter(private val list: List<Artist>, private val context: Cont
     override fun onBindViewHolder(holder: topArtistsRecyclerViewViewHolder, position: Int) {
         holder.artistItemBinding.artistName.text = list[position].name
         holder.artistItemBinding.artistRank.text = list[position].attr.rank
-        holder.artistItemBinding.root.setOnClickListener{
-            val intent = Intent(context, ArtistActivity::class.java)
-            intent.putExtra("artist",list[position].name)
-            context.startActivity(intent)
-        }
+            holder.artistItemBinding.root.setOnClickListener{
+                if(MyUtils.isInternetAvailable(context)){
+                    val intent = Intent(context, ArtistActivity::class.java)
+                    intent.putExtra("artist",list[position].name)
+                    context.startActivity(intent)
+                }else{
+                    Toast.makeText(context,"Please Check your Internet Connection", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+
     }
 
     override fun getItemCount(): Int {

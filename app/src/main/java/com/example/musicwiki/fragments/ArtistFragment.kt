@@ -34,7 +34,7 @@ class ArtistFragment : Fragment() {
         val api = DetailsApi()
         val repository = InfoRepository(api,requireContext())
         artistViewModel = ViewModelProviders.of(this,ArtistViewModelFactory(repository,name)).get(ArtistViewModel::class.java)
-        artistViewModel.topAlbums.observe(viewLifecycleOwner){topArtist->
+        artistViewModel.topArtists.observe(viewLifecycleOwner){topArtist->
             topArtistRecyclerview.also {
                 it.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
                 it.setHasFixedSize(true)

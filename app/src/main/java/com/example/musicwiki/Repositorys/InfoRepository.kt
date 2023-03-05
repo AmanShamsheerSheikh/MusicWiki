@@ -50,6 +50,8 @@ class InfoRepository(val api: DetailsApi,private val context: Context) {
     val artistTopTracks : LiveData<ArtistTracks>
         get() = _artistTopTracks
 
+
+
     suspend fun getInfo(name: String){
         if(MyUtils.isInternetAvailable(context)){
             Log.d("name", "getInfo: $name")
@@ -63,6 +65,7 @@ class InfoRepository(val api: DetailsApi,private val context: Context) {
 
         }
     }
+
     suspend fun getTopAlbums(name: String){
         if(MyUtils.isInternetAvailable(context)){
             Log.d("name", "getInfo: $name")
@@ -71,6 +74,20 @@ class InfoRepository(val api: DetailsApi,private val context: Context) {
                 Log.d("res", "getInfo: $result")
                 if(result.body() != null){
                     _topAlbums.postValue(result.body())
+                }
+            }
+
+        }
+    }
+
+    suspend fun getTopTracks(name: String){
+        if(MyUtils.isInternetAvailable(context)){
+            Log.d("name", "getInfo: $name")
+            GlobalScope.launch {
+                val result = api.getTopTracks(name)
+                Log.d("res", "getInfo: $result")
+                if(result.body() != null){
+                    _tracks.postValue(result.body())
                 }
             }
 
@@ -91,19 +108,7 @@ class InfoRepository(val api: DetailsApi,private val context: Context) {
         }
     }
 
-    suspend fun getTopTracks(name: String){
-        if(MyUtils.isInternetAvailable(context)){
-            Log.d("name", "getInfo: $name")
-            GlobalScope.launch {
-                val result = api.getTopTracks(name)
-                Log.d("res", "getInfo: $result")
-                if(result.body() != null){
-                    _tracks.postValue(result.body())
-                }
-            }
 
-        }
-    }
 
     suspend fun getAlbum(artistName: String,albumName : String){
         if(MyUtils.isInternetAvailable(context)){

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,13 +14,19 @@ import com.example.musicwiki.Repositorys.InfoRepository
 import com.example.musicwiki.ViewModelFactories.AlbumActivityViewModelFactory
 import com.example.musicwiki.ViewModels.AlbumActivityViewModel
 import com.example.musicwiki.adapters.AlbumActivityAdapter
+import com.example.musicwiki.util.MyUtils
 import kotlinx.android.synthetic.main.activity_album.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 
 class AlbumActivity : AppCompatActivity() {
     private lateinit var albumActivityViewModel: AlbumActivityViewModel
+    private lateinit var albumfactory: AlbumActivityViewModelFactory
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_album)
@@ -27,13 +34,12 @@ class AlbumActivity : AppCompatActivity() {
         val artist = intent.getStringExtra("artist")
         val api = DetailsApi()
         val repository = InfoRepository(api,this)
+        albumfactory = AlbumActivityViewModelFactory(repository, artist!!, album!!)
         Log.d("Album", "onCreate: ${album}")
         Log.d("Album", "onCreate: ${artist}")
 
 
-        albumActivityViewModel = ViewModelProviders.of(this,
-                AlbumActivityViewModelFactory(repository, artist!!, album!!)
-            ).get(AlbumActivityViewModel::class.java)
+        albumActivityViewModel = ViewModelProviders.of(this, AlbumActivityViewModelFactory(repository, artist!!, album!!)).get(AlbumActivityViewModel::class.java)
             albumActivityViewModel.Album.observe(this) { a ->
                 recyclerViewAlbum.also {
                     it.layoutManager =
@@ -73,6 +79,5 @@ class AlbumActivity : AppCompatActivity() {
 
 
     }
-
 
 }

@@ -55,6 +55,8 @@ class DetailActivity : AppCompatActivity() {
         fragmentAdapter.addFragment(AlbumFragment(),"Albums")
         fragmentAdapter.addFragment(ArtistFragment(),"Artists")
         fragmentAdapter.addFragment(TrackFragment(),"Tracks")
+
+
         fragmentAdapter.setName(name)
 
         viewpager.adapter = fragmentAdapter

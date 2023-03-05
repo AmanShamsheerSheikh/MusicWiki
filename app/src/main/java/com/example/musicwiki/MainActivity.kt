@@ -22,6 +22,10 @@ import com.example.musicwiki.data.tag.Tag
 import com.example.musicwiki.room.tagDatabase
 import com.example.musicwiki.util.MyUtils
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlin.math.exp
 
 
 class MainActivity : AppCompatActivity(), RecyclerViewOnClick {
@@ -30,6 +34,8 @@ class MainActivity : AppCompatActivity(), RecyclerViewOnClick {
     private lateinit var list2 : List<Tag>
     private lateinit var list1 : List<Tag>
     private var on : Int = 0
+    private var i : Int = 0
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -37,36 +43,53 @@ class MainActivity : AppCompatActivity(), RecyclerViewOnClick {
         val database = tagDatabase(this)
         val repository = tagRepository(api,database,applicationContext)
         factory = MainViewModelFactory(repository)
-        viewModel = ViewModelProviders.of(this,factory).get(MainViewModel::class.java)
+        if(MyUtils.isInternetAvailable(this)){
+            getData(on)
+            i += 1
+        }
 
-        viewModel.tags.observe(this, Observer {list->
-            val size = list.size/2
-            val subLists = list.chunked(size)
-            list1 = subLists[0]
-            list2 = subLists[0]+subLists[1]
-            list1 = list1.slice(0..14)
-            setRecyclerView(list1)
-        })
-
+        loop()
 
 
     }
+    fun getData(state : Int){
+        if(MyUtils.isInternetAvailable(this)){
+            viewModel = ViewModelProviders.of(this,factory).get(MainViewModel::class.java)
+            viewModel.tags.observe(this, Observer {list->
+                val size = list.size/2
+                val subLists = list.chunked(size)
+                list1 = subLists[0]
+                list2 = subLists[0]+subLists[1]
+                list1 = list1.slice(0..14)
+                if(state == 0){
+                    setRecyclerView(list1)
+                }else{
+                    setRecyclerView(list2)
+                }
 
-    fun expand(view: View) {
-        layout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-        if(on == 0){
-            TransitionManager.beginDelayedTransition(layout, AutoTransition())
-            setRecyclerView(list2)
-            on = 1
-            Toast.makeText(this,"Scroll to see more genres",Toast.LENGTH_LONG).show()
-            expanded_button.setImageResource(R.drawable.ic_baseline_arrow_drop_up_24)
-        }else{
-            TransitionManager.beginDelayedTransition(layout, AutoTransition())
-            setRecyclerView(list1)
-            on= 0
-
-            expanded_button.setImageResource(R.drawable.ic_baseline_arrow_drop_down_24)
+            })
         }
+    }
+
+
+    fun expand() {
+        layout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+        expanded_button.setOnClickListener{
+            if(on == 0){
+                TransitionManager.beginDelayedTransition(layout, AutoTransition())
+                getData(1)
+                on = 1
+                Toast.makeText(this,"Scroll to see more genres",Toast.LENGTH_LONG).show()
+                expanded_button.setImageResource(R.drawable.ic_baseline_arrow_drop_up_24)
+            }else{
+                TransitionManager.beginDelayedTransition(layout, AutoTransition())
+                getData(0)
+                on= 0
+
+                expanded_button.setImageResource(R.drawable.ic_baseline_arrow_drop_down_24)
+            }
+        }
+
 
     }
 
@@ -102,6 +125,21 @@ class MainActivity : AppCompatActivity(), RecyclerViewOnClick {
             .show()
     }
 
+
+
+    private fun loop() {
+        CoroutineScope(IO).launch {
+            delay(1000)
+            CoroutineScope(Main).launch {
+                if(MyUtils.isInternetAvailable(this@MainActivity) && (i == 0)){
+                    getData(0)
+                    i += 1
+                }
+                expand()
+                loop()
+            }
+        }
+    }
 }
 
 

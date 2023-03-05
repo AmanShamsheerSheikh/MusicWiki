@@ -18,20 +18,27 @@ import com.example.musicwiki.adapters.ArtistAlbumAdapter
 import com.example.musicwiki.adapters.ArtistTagsAdapter
 import com.example.musicwiki.adapters.ArtistTracksAdapter
 import com.example.musicwiki.data.artistData.Artist
+import com.example.musicwiki.util.MyUtils
 import kotlinx.android.synthetic.main.activity_album.*
 import kotlinx.android.synthetic.main.activity_artist.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 class ArtistActivity : AppCompatActivity() {
     private lateinit var artistActivityViewModel: ArtistActivityViewModel
+    private lateinit var artistfactory : ArtistActivityViewModelfactory
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_artist)
         val artist = intent.getStringExtra("artist")
         val api = DetailsApi()
         val repository = InfoRepository(api,this)
-        artistActivityViewModel = ViewModelProviders.of(this,ArtistActivityViewModelfactory(repository,artist!!)).get(ArtistActivityViewModel::class.java)
+        artistfactory = ArtistActivityViewModelfactory(repository,artist!!)
+        artistActivityViewModel = ViewModelProviders.of(this,artistfactory).get(ArtistActivityViewModel::class.java)
         artistActivityViewModel.Artist.observe(this){artist->
             spinKitViewArtist.visibility = View.GONE
             labelPlayCount.visibility = View.VISIBLE
@@ -94,6 +101,6 @@ class ArtistActivity : AppCompatActivity() {
             }
         }
 
-
     }
+
 }

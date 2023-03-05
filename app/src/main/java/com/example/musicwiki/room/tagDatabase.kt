@@ -23,9 +23,8 @@ abstract class tagDatabase : RoomDatabase(){
             Room.databaseBuilder(
                 context.applicationContext,
                 tagDatabase::class.java,
-                "tags.db"
-            ).createFromAsset("database/tags_db-tags.sql")
-                .build()
+                "tags_database"
+            ).build()
 
 
     }

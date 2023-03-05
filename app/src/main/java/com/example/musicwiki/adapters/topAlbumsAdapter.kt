@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ import com.example.musicwiki.RecyclerViewOnClick
 import com.example.musicwiki.data.topAlbumData.Album
 import com.example.musicwiki.databinding.ImageItemBinding
 import com.example.musicwiki.databinding.TagitemBinding
+import com.example.musicwiki.util.MyUtils
 
 class topAlbumsAdapter(private val list: List<Album>,private val context: Context) : RecyclerView.Adapter<topAlbumsAdapter.topAlbumsRecyclerViewViewHolder>() {
 
@@ -44,13 +46,16 @@ class topAlbumsAdapter(private val list: List<Album>,private val context: Contex
             .placeholder(R.drawable.progress_animation)
             .into(holder.imageItemBinding.imageView)
 
-//        holder.imageItemBinding.albumName.text = list[position].name
 
         holder.imageItemBinding.root.setOnClickListener{
-            val intent = Intent(context, AlbumActivity::class.java)
-            intent.putExtra("artist",list[position].artist.name)
-            intent.putExtra("album",list[position].name)
-            context.startActivity(intent)
+            if(MyUtils.isInternetAvailable(context)){
+                val intent = Intent(context, AlbumActivity::class.java)
+                intent.putExtra("artist",list[position].artist.name)
+                intent.putExtra("album",list[position].name)
+                context.startActivity(intent)
+            }else{
+                Toast.makeText(context,"Please Check your Internet Connection", Toast.LENGTH_SHORT).show()
+            }
         }
 
 
