@@ -20,6 +20,8 @@ import com.example.musicwiki.adapters.ArtistTracksAdapter
 import com.example.musicwiki.data.artistData.Artist
 import kotlinx.android.synthetic.main.activity_album.*
 import kotlinx.android.synthetic.main.activity_artist.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 class ArtistActivity : AppCompatActivity() {
     private lateinit var artistActivityViewModel: ArtistActivityViewModel
@@ -50,7 +52,29 @@ class ArtistActivity : AppCompatActivity() {
                 it.setHasFixedSize(true)
                 it.adapter = ArtistTagsAdapter(artist.artist.tags.tag)
             }
-            infoTextViewArtist.text = artist.artist.bio.content
+            var str : String = artist.artist.bio.summary
+            val list = ArrayList<String>()
+            val re: Pattern = Pattern.compile(
+                "[^.!?\\s][^.!?]*(?:[.!?](?!['\"]?\\s|$)[^.!?]*)*[.!?]?['\"]?(?=\\s|$)",
+                Pattern.MULTILINE or Pattern.COMMENTS
+            )
+            var i :Int = 0
+            if (str.isNullOrEmpty()){
+                str = "DATA NOT FOUND"
+
+            }
+
+            val reMatcher: Matcher = re.matcher(str!!)
+            while (reMatcher.find()) {
+                list.add(reMatcher.group())
+            }
+            if(list.size > 1){
+                i = 2
+            }else{
+                i = 0
+            }
+            str = list.slice(0..i).joinToString("")
+            infoTextViewArtist.text = str
 
         }
         artistActivityViewModel.ArtistTopAlbums.observe(this){albums->

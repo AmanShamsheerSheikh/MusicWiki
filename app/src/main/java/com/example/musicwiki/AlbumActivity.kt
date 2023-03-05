@@ -14,6 +14,8 @@ import com.example.musicwiki.ViewModelFactories.AlbumActivityViewModelFactory
 import com.example.musicwiki.ViewModels.AlbumActivityViewModel
 import com.example.musicwiki.adapters.AlbumActivityAdapter
 import kotlinx.android.synthetic.main.activity_album.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 class AlbumActivity : AppCompatActivity() {
@@ -29,8 +31,7 @@ class AlbumActivity : AppCompatActivity() {
         Log.d("Album", "onCreate: ${artist}")
 
 
-        albumActivityViewModel = ViewModelProviders.of(
-                this,
+        albumActivityViewModel = ViewModelProviders.of(this,
                 AlbumActivityViewModelFactory(repository, artist!!, album!!)
             ).get(AlbumActivityViewModel::class.java)
             albumActivityViewModel.Album.observe(this) { a ->
@@ -46,9 +47,26 @@ class AlbumActivity : AppCompatActivity() {
                     .into(albumImage)
                 spinKitViewAlbum.visibility = View.GONE
                 var str : String? = a.album.wiki?.content
+                val list = ArrayList<String>()
+                val re: Pattern = Pattern.compile(
+                    "[^.!?\\s][^.!?]*(?:[.!?](?!['\"]?\\s|$)[^.!?]*)*[.!?]?['\"]?(?=\\s|$)",
+                    Pattern.MULTILINE or Pattern.COMMENTS
+                )
+                var i :Int = 0
                 if (str.isNullOrEmpty()){
                     str = "DATA NOT FOUND"
                 }
+                val reMatcher: Matcher = re.matcher(str!!)
+                while (reMatcher.find()) {
+                    list.add(reMatcher.group())
+                }
+                if(list.size > 1){
+                    i = 2
+                }else{
+                    i = 0
+                }
+                str = list.slice(0..i).joinToString("")
+
 
                 infoTextViewAlbum.text = str
             }

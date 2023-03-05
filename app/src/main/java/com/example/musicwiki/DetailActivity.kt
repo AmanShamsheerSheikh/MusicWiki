@@ -1,10 +1,8 @@
 package com.example.musicwiki
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.example.musicwiki.Api.DetailsApi
 import com.example.musicwiki.Repositorys.InfoRepository
@@ -17,6 +15,8 @@ import com.example.musicwiki.fragments.TrackFragment
 import kotlinx.android.synthetic.main.activity_artist.*
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.fragment_album.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var detailViewModel: DetailViewModel
@@ -33,13 +33,21 @@ class DetailActivity : AppCompatActivity() {
         detailViewModel = ViewModelProviders.of(this,DetailViewModelFactory(repository,name!!)).get(DetailViewModel::class.java)
 
         detailViewModel.tagsInfo.observe(this){
-
             spinKitViewDetail.visibility = View.GONE
             heading.visibility = View.VISIBLE
             tabLayout.visibility = View.VISIBLE
-            var string = it.tag.wiki.summary.replace("<a href=\"http://www.last.fm/tag/$name\">Read more on Last.fm</a>.", "")
-            string = string.replace("\n","")
-            infoTextView.text = string
+            var str = it.tag.wiki.content
+            val list = ArrayList<String>()
+            val re: Pattern = Pattern.compile(
+                "[^.!?\\s][^.!?]*(?:[.!?](?!['\"]?\\s|$)[^.!?]*)*[.!?]?['\"]?(?=\\s|$)",
+                Pattern.MULTILINE or Pattern.COMMENTS
+            )
+            val reMatcher: Matcher = re.matcher(str)
+            while (reMatcher.find()) {
+                list.add(reMatcher.group())
+            }
+            str = list.slice(0..2).joinToString("")
+            infoTextView.text = str
         }
 
 

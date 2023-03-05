@@ -1,6 +1,7 @@
 package com.example.musicwiki.Repositorys
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.musicwiki.Api.DetailsApi
@@ -25,7 +26,7 @@ class tagRepository(private val api:DetailsApi,private val tagDatabase: tagDatab
             }
         }else{
             val tags = tagDatabase.tagDao().getTag()
-
+            Log.d("tags", "getTags: "+tagDatabase.tagDao().getTag())
             _tags.postValue(tags)
         }
     }

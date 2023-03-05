@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.musicwiki.data.tag.Tag
 
-@Database(entities = [Tag::class], version = 1)
+@Database(entities = [Tag::class], version = 1, exportSchema = true)
 abstract class tagDatabase : RoomDatabase(){
     abstract fun tagDao() : tagDao
     companion object{
